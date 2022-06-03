@@ -1,3 +1,8 @@
+--[[ 
+    Based on enemybar2 addon by 'mmckee,akaden'
+    Blanket liftet aggro tracking logic, planning to refine later
+    as it's completely overkill and there should be better approaches.
+ ]]
 
 _addon.name = 'BetterAutoTarget'
 _addon.author = 'Sunderous'
@@ -13,20 +18,6 @@ require('actionTracking')
 --settings = config.load(defaults)
 
 party_members = {}
-
-function inc_action_message(arr)
-    -- Unit died
-    if S{6,20,113,406,605,646}:contains(arr.message_id) then
-        debuffed_mobs[arr.target_id] = nil
-        
-    -- Debuff expired
-    elseif S{64,204,206,350,531}:contains(arr.message_id) then
-        if debuffed_mobs[arr.target_id] then
-            debuffed_mobs[arr.target_id][arr.param_1] = nil
-        end
-    end
-end
-
 
 windower.register_event('incoming chunk', function(id, data)
     -- NPC Update Packet
